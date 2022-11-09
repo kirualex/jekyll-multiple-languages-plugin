@@ -22,7 +22,7 @@ module Jekyll
   Jekyll::Hooks.register :site, :pre_render do |site, payload|
       lang = site.config['lang']
       puts "Loading translation from file #{site.source}/_i18n/#{lang}"
-      site.parsed_translations[lang] = YAML.load_file("#{site.source}/_i18n/#{lang}.*")
+      site.parsed_translations[lang] = YAML.load_file("#{site.source}/_i18n/#{lang}.json")
   end
 
   #*****************************************************************************
@@ -605,7 +605,7 @@ end
 def translate_key(key, lang, site)
   unless site.parsed_translations.has_key?(lang)
     puts              "Loading translation from file #{site.source}/_i18n/#{lang}"
-    site.parsed_translations[lang] = YAML.load_file("#{site.source}/_i18n/#{lang}.*")
+    site.parsed_translations[lang] = YAML.load_file("#{site.source}/_i18n/#{lang}.json")
   end
 
   translation = site.parsed_translations[lang].access(key) if key.is_a?(String)
